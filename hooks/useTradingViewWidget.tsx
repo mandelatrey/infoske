@@ -10,7 +10,11 @@ const useTradingViewWidget = (
     useEffect(
         () => {
             if (!containerRef.current) return;
-            if (containerRef.current.dataset.loaded) return;
+
+            if (containerRef.current.dataset.loaded) {
+                containerRef.current.innerHTML = '';
+                delete containerRef.current.dataset.loaded;
+            }
             containerRef.current.innerHTML = `<div class='tradingview-widget-container__widget' style="width: 100%; height: ${height}px;"></div>`;
 
             const script = document.createElement("script");
@@ -23,10 +27,10 @@ const useTradingViewWidget = (
             containerRef.current.dataset.loaded = 'true';
 
             return () => {
-               if (containerRef.current) {
-                containerRef.current.innerHTML = '';
-                delete containerRef.current.dataset.loaded;
-               } 
+                if (containerRef.current) {
+                    containerRef.current.innerHTML = '';
+                    delete containerRef.current.dataset.loaded;
+                }
             }
 
         },
